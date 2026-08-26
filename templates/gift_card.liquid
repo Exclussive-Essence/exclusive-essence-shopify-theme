@@ -1,0 +1,9 @@
+{% layout none %}
+<!doctype html>
+<html>
+<head>{{ content_for_header }}</head>
+<body>
+  <h1>Gift card</h1>
+  <p>{{ gift_card.code | format_code }} — {{ gift_card.balance | money }}</p>
+</body>
+</html>
