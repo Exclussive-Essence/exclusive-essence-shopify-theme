@@ -1,0 +1,10 @@
+<section class="container">
+  <h1>Search</h1>
+  <form action="{{ routes.search_url }}" method="get"><input type="search" name="q" value="{{ search.terms | escape }}"><button>Search</button></form>
+  {% for result in search.results %}
+    <p><a href="{{ result.url }}">{{ result.title }}</a></p>
+  {% endfor %}
+</section>
+{% schema %}
+{"name":"Search","settings":[]}
+{% endschema %}

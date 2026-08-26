@@ -1,0 +1,17 @@
+<section class="container">
+  <p class="gate-kicker">The Essence Way!</p>
+  <h1>Exclusive Essence</h1>
+  <p>Premium beauty supply for human hair, hair care, hair color, and essentials.</p>
+  {% if collections.all.products_count > 0 %}
+    <div class="catalog-grid">
+      {% for product in collections.all.products limit: 24 %}
+        {% render 'product-card', product: product %}
+      {% endfor %}
+    </div>
+  {% else %}
+    <p>Add products in Shopify Admin and they will appear here.</p>
+  {% endif %}
+</section>
+{% schema %}
+{"name":"Homepage","settings":[]}
+{% endschema %}

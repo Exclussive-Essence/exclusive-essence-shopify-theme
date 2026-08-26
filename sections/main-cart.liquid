@@ -1,0 +1,15 @@
+<section class="container">
+  <h1>Cart</h1>
+  {% if cart.item_count == 0 %}
+    <p>Your cart is empty.</p>
+  {% else %}
+    {% for item in cart.items %}
+      <p>{{ item.product.title }} × {{ item.quantity }} — {{ item.final_line_price | money }}</p>
+    {% endfor %}
+    <p>Subtotal {{ cart.total_price | money }}</p>
+    <a href="/checkout">Checkout</a>
+  {% endif %}
+</section>
+{% schema %}
+{"name":"Cart","settings":[]}
+{% endschema %}

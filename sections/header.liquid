@@ -1,0 +1,14 @@
+<div class="utility"><div class="container"><span class="essence-way">The Essence Way!</span></div></div>
+<header class="site-header">
+  <div class="container header-main">
+    <a href="{{ routes.root_url }}">{{ shop.name }}</a>
+    <form action="{{ routes.search_url }}" method="get" class="search-shell">
+      <input type="search" name="q" value="{{ search.terms | escape }}" placeholder="Search products...">
+      <button type="submit">Search</button>
+    </form>
+    <a href="{{ routes.cart_url }}">Cart {{ cart.item_count }}</a>
+  </div>
+</header>
+{% schema %}
+{"name":"Header","settings":[]}
+{% endschema %}
