@@ -1,8 +1,123 @@
 {
   "general": {
+    "meta": {
+      "tags": "Tagged \"{{ tags }}\"",
+      "page": "Page {{ page }}"
+    },
+    "password_page": {
+      "login_form_heading": "Enter store using password",
+      "login_password_button": "Enter the Store",
+      "login_form_error": "Wrong password",
+      "login_form_password_label": "Password"
+    },
+    "social": {
+      "links": {
+        "instagram": "Instagram"
+      }
+    },
+    "continue_shopping": "Continue shopping",
+    "search": {
+      "placeholder": "Search products, brands and categories...",
+      "submit": "Search",
+      "no_results": "No products match “{{ terms }}”.",
+      "results_for": "{{ count }} results for “{{ terms }}”"
+    },
     "404": {
-      "title": "Page not found",
+      "title": "This page is not on the shelf.",
+      "subtext": "The link may be out of date. Head back to the storefront or browse the catalog.",
       "button": "Back to storefront"
+    },
+    "breadcrumbs": {
+      "home": "Home",
+      "catalog": "Catalog",
+      "cart": "Cart"
+    }
+  },
+  "products": {
+    "add_to_cart": "Add to Cart",
+    "sold_out": "Sold Out",
+    "from": "From {{ price }}",
+    "in_store": "In Store",
+    "pickup": "In stock for pickup at 2100 Cleveland Ave, Columbus"
+  },
+  "cart": {
+    "title": "Your Cart",
+    "empty": "Your cart is empty.",
+    "empty_hint": "Start with the catalog — human hair, hair care, color and everyday essentials.",
+    "start_shopping": "Start Shopping",
+    "subtotal": "Subtotal",
+    "update": "Update cart",
+    "checkout": "Checkout Securely",
+    "remove": "Remove"
+  },
+  "newsletter": {
+    "success": "Welcome to the Essence List.",
+    "label": "Email",
+    "button": "Join"
+  },
+  "customer": {
+    "login": {
+      "title": "Sign in",
+      "email": "Email",
+      "password": "Password",
+      "submit": "Sign in",
+      "forgot_password": "Forgot password?"
+    },
+    "register": {
+      "title": "Create account",
+      "first_name": "First name",
+      "last_name": "Last name",
+      "email": "Email",
+      "password": "Password",
+      "submit": "Create account"
+    },
+    "account": {
+      "title": "Account",
+      "details": "Account details",
+      "view_addresses": "View addresses",
+      "return": "Return to account",
+      "logout": "Log out",
+      "orders": "Order history",
+      "empty_orders": "You have not placed any orders yet."
+    },
+    "order": {
+      "title": "Order {{ name }}",
+      "date": "Date",
+      "total": "Total"
+    },
+    "addresses": {
+      "title": "Addresses",
+      "add_new": "Add address",
+      "default": "Default"
+    },
+    "recover_password": {
+      "title": "Reset password",
+      "subtext": "Enter your email",
+      "success": "We sent you a reset email.",
+      "submit": "Send reset link"
+    },
+    "activate_account": {
+      "title": "Activate account",
+      "subtext": "Create your password",
+      "password": "Password",
+      "password_confirm": "Confirm password",
+      "submit": "Activate",
+      "cancel": "Decline"
+    },
+    "reset_password": {
+      "title": "Reset account password",
+      "subtext": "Enter a new password",
+      "password": "Password",
+      "password_confirm": "Confirm password",
+      "submit": "Reset password"
+    }
+  },
+  "gift_cards": {
+    "issued": "A {{ value }} gift card for {{ shop }}"
+  },
+  "shopify": {
+    "checkout": {
+      "order_summary": "Order summary"
     }
   }
 }

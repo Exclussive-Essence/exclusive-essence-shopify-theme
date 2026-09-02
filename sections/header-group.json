@@ -1,0 +1,26 @@
+{
+  "type": "header",
+  "name": "Header",
+  "sections": {
+    "entry-gate": {
+      "type": "entry-gate",
+      "settings": {
+        "enable": true,
+        "kicker": "The Essence Way!",
+        "title": "Get first access.",
+        "text": "Join the list for new product releases, our newsletter, and updates on the layaway program — coming soon.",
+        "reward_code": "ESSENCE10"
+      }
+    },
+    "header": {
+      "type": "header",
+      "settings": {
+        "logo_width": 215
+      }
+    }
+  },
+  "order": [
+    "entry-gate",
+    "header"
+  ]
+}

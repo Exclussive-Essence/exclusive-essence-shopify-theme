@@ -1,0 +1,16 @@
+{
+  "type": "footer",
+  "name": "Footer",
+  "sections": {
+    "footer": {
+      "type": "footer",
+      "settings": {
+        "heading": "Join the Essence List",
+        "newsletter_text": "Get new-arrival alerts, restock updates and local-store offers."
+      }
+    }
+  },
+  "order": [
+    "footer"
+  ]
+}

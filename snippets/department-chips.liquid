@@ -1,0 +1,16 @@
+{%- comment -%}
+  Always-visible department chips. Links to real collections when those
+  handles exist; otherwise they open the full catalog so nothing is hidden.
+{%- endcomment -%}
+<nav class="chips" role="navigation" aria-label="Departments">
+  <a class="chip{% if current == 'all' or current == blank %} active{% endif %}" href="{{ routes.all_products_collection_url }}">All Essentials</a>
+  <a class="chip{% if current == 'human-hair' %} active{% endif %}" href="{% render 'collection-url', handle: 'human-hair' %}">Human Hair</a>
+  <a class="chip{% if current == 'hair-care' %} active{% endif %}" href="{% render 'collection-url', handle: 'hair-care' %}">Hair Care</a>
+  <a class="chip{% if current == 'hair-color' %} active{% endif %}" href="{% render 'collection-url', handle: 'hair-color' %}">Hair Color</a>
+  <a class="chip{% if current == 'styling-edge' %} active{% endif %}" href="{% render 'collection-url', handle: 'styling-edge' %}">Styling & Edge</a>
+  <a class="chip{% if current == 'tools-accessories' %} active{% endif %}" href="{% render 'collection-url', handle: 'tools-accessories' %}">Tools & Accessories</a>
+  <a class="chip{% if current == 'braids-wigs-crochet' %} active{% endif %}" href="{% render 'collection-url', handle: 'braids-wigs-crochet' %}">Braids, Wigs & Crochet</a>
+  <a class="chip{% if current == 'skin-body' %} active{% endif %}" href="{% render 'collection-url', handle: 'skin-body' %}">Skin & Body</a>
+  <a class="chip{% if current == 'beauty-fashion' %} active{% endif %}" href="{% render 'collection-url', handle: 'beauty-fashion' %}">Beauty & Fashion</a>
+  <a class="chip{% if current == 'essentials' %} active{% endif %}" href="{% render 'collection-url', handle: 'essentials' %}">Essentials</a>
+</nav>

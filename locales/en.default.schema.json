@@ -1,0 +1,14 @@
+{
+  "general": {
+    "colors": "Colors"
+  },
+  "sections": {
+    "header": { "name": "Header" },
+    "footer": { "name": "Footer" },
+    "main-index": { "name": "Homepage storefront" },
+    "main-product": { "name": "Product" },
+    "main-collection": { "name": "Collection" },
+    "main-cart": { "name": "Cart" },
+    "entry-gate": { "name": "Entry gate" }
+  }
+}

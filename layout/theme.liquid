@@ -1,33 +1,58 @@
 <!doctype html>
-<html lang="{{ request.locale.iso_code }}">
+<html lang="{{ request.locale.iso_code | default: 'en' }}">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#ffffff">
   <title>
     {{ page_title }}{% if current_tags %} – {{ current_tags | join: ', ' }}{% endif %}{% if current_page != 1 %} – Page {{ current_page }}{% endif %}
     {% unless page_title contains shop.name %} – {{ shop.name }}{% endunless %}
   </title>
-  {% if page_description %}
-    <meta name="description" content="{{ page_description | escape }}">
-  {% endif %}
   <link rel="canonical" href="{{ canonical_url }}">
+  {% render 'meta-tags' %}
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,600;1,700&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,500;0,600;1,600;1,700&display=swap" rel="stylesheet">
   {{ 'ee.css' | asset_url | stylesheet_tag }}
   {{ content_for_header }}
+  <script>
+    window.EE_ASSET_PREFIX = {{ 'ee.css' | asset_url | split: 'ee.css' | first | json }};
+    window.EE_ROUTES = {
+      root: {{ routes.root_url | json }},
+      cart: {{ routes.cart_url | json }},
+      cartAdd: {{ routes.cart_add_url | json }},
+      cartUpdate: {{ routes.cart_update_url | json }},
+      account: {{ routes.account_url | json }},
+      search: {{ routes.search_url | json }},
+      collections: {{ routes.all_products_collection_url | json }}
+    };
+    window.EE_CART_COUNT = {{ cart.item_count }};
+    window.EE_MONEY_FORMAT = {{ shop.money_format | json }};
+    window.EE_IS_INDEX = {{ template.name | json }} === 'index';
+    window.EE_COLLECTION_MAP = {
+      "All": {{ routes.all_products_collection_url | json }},
+      "Human Hair": {% if collections['human-hair'].handle == 'human-hair' %}{{ collections['human-hair'].url | json }}{% else %}{{ routes.all_products_collection_url | json }}{% endif %},
+      "Hair Care": {% if collections['hair-care'].handle == 'hair-care' %}{{ collections['hair-care'].url | json }}{% else %}{{ routes.all_products_collection_url | json }}{% endif %},
+      "Hair Color": {% if collections['hair-color'].handle == 'hair-color' %}{{ collections['hair-color'].url | json }}{% else %}{{ routes.all_products_collection_url | json }}{% endif %},
+      "Styling & Edge": {% if collections['styling-edge'].handle == 'styling-edge' %}{{ collections['styling-edge'].url | json }}{% else %}{{ routes.all_products_collection_url | json }}{% endif %},
+      "Tools & Accessories": {% if collections['tools-accessories'].handle == 'tools-accessories' %}{{ collections['tools-accessories'].url | json }}{% else %}{{ routes.all_products_collection_url | json }}{% endif %},
+      "Braids, Wigs & Crochet": {% if collections['braids-wigs-crochet'].handle == 'braids-wigs-crochet' %}{{ collections['braids-wigs-crochet'].url | json }}{% else %}{{ routes.all_products_collection_url | json }}{% endif %},
+      "Skin & Body": {% if collections['skin-body'].handle == 'skin-body' %}{{ collections['skin-body'].url | json }}{% else %}{{ routes.all_products_collection_url | json }}{% endif %},
+      "Beauty & Fashion": {% if collections['beauty-fashion'].handle == 'beauty-fashion' %}{{ collections['beauty-fashion'].url | json }}{% else %}{{ routes.all_products_collection_url | json }}{% endif %},
+      "Essentials": {% if collections['essentials'].handle == 'essentials' %}{{ collections['essentials'].url | json }}{% else %}{{ routes.all_products_collection_url | json }}{% endif %}
+    };
+  </script>
   <style>
     :root{
-      --porcelain:#fffefd;
-      --pearl:#f8f7f3;
-      --ivory:#f3ede2;
+      --porcelain:{{ settings.color_porcelain | default: '#fffefd' }};
+      --pearl:{{ settings.color_pearl | default: '#f8f7f3' }};
+      --ivory:{{ settings.color_ivory | default: '#f3ede2' }};
       --cream:#ebe0cf;
-      --gold:#c79b3b;
-      --gold-2:#e4c778;
-      --antique:#8f6928;
+      --gold:{{ settings.color_gold | default: '#c79b3b' }};
+      --gold-2:{{ settings.color_gold_2 | default: '#e4c778' }};
+      --antique:{{ settings.color_antique | default: '#8f6928' }};
       --bronze:#6c4d20;
-      --ink:#171714;
+      --ink:{{ settings.color_ink | default: '#171714' }};
       --charcoal:#34312c;
       --muted:#6f6a61;
       --line:#e4dac8;
@@ -36,14 +61,21 @@
       --shadow-sm:0 8px 24px rgba(80,60,24,.08);
       --max:1480px;
     }
-    html,body{background:var(--porcelain);color:var(--ink);font-family:Inter,Arial,Helvetica,sans-serif;}
+    html,body{background:var(--porcelain);color:var(--ink);font-family:Inter,system-ui,Arial,Helvetica,sans-serif;}
   </style>
+  {% render 'json-ld' %}
 </head>
-<body>
-  {% section 'header' %}
-  <main id="MainContent" role="main">
+<body class="template-{{ template.name }}{% if template.suffix %} template-{{ template.name }}-{{ template.suffix }}{% endif %}">
+  <a class="skip-to-content" href="#MainContent">Skip to content</a>
+  {% sections 'header-group' %}
+  <main id="MainContent" role="main" tabindex="-1">
     {{ content_for_layout }}
   </main>
-  {% section 'footer' %}
+  {% sections 'footer-group' %}
+  {% render 'overlays' %}
+  {% if template.name == 'index' %}
+    <script src="{{ 'ee-catalog.js' | asset_url }}" defer></script>
+  {% endif %}
+  <script src="{{ 'ee-storefront.js' | asset_url }}" defer></script>
 </body>
 </html>

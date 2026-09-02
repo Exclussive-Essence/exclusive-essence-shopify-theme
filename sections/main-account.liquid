@@ -1,0 +1,51 @@
+<section class="ee-shopify-main customer">
+  <div class="container">
+    <nav class="ee-breadcrumb" aria-label="Breadcrumb">
+      <a href="{{ routes.root_url }}">Home</a>
+      <span>/</span>
+      <span>Account</span>
+    </nav>
+    <div class="ee-account-split">
+      <div>
+        <p class="curated-kicker">Welcome back</p>
+        <h1>Hello{% if customer.first_name %}, {{ customer.first_name }}{% endif %}</h1>
+        <p class="ee-lede">
+          <a href="{{ routes.account_addresses_url }}">Addresses</a>
+          ·
+          <a href="{{ routes.account_logout_url }}">Log out</a>
+        </p>
+      </div>
+      <aside class="store-card is-open-store">
+        <span class="store-badge open">Pickup</span>
+        <h3>Columbus flagship</h3>
+        <p>2100 Cleveland Ave, Columbus, OH 43211<br>Mon–Sat 10 AM–10 PM · Sun 12–6 PM</p>
+      </aside>
+    </div>
+
+    <h2>Order history</h2>
+    {% if customer.orders.size == 0 %}
+      <div class="ee-empty" style="padding:32px 0">
+        <p>You have not placed any orders yet.</p>
+        <a class="btn btn-primary" href="{{ routes.all_products_collection_url }}">Shop the catalog</a>
+      </div>
+    {% else %}
+      <table class="cart-table">
+        <thead><tr><th>Order</th><th>Date</th><th>Payment</th><th>Fulfillment</th><th>Total</th></tr></thead>
+        <tbody>
+          {% for order in customer.orders %}
+            <tr>
+              <td><a href="{{ order.customer_url }}">{{ order.name }}</a></td>
+              <td>{{ order.created_at | date: '%b %d, %Y' }}</td>
+              <td>{{ order.financial_status_label }}</td>
+              <td>{{ order.fulfillment_status_label }}</td>
+              <td>{{ order.total_net_amount | money }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% endif %}
+  </div>
+</section>
+{% schema %}
+{ "name": "Account", "settings": [] }
+{% endschema %}

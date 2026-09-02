@@ -1,4 +1,17 @@
-<section class="container"><h1>{{ page.title }}</h1>{{ page.content }}</section>
+<section class="ee-shopify-main">
+  <div class="container ee-prose">
+    <nav class="ee-breadcrumb" aria-label="Breadcrumb">
+      <a href="{{ routes.root_url }}">Home</a>
+      <span>/</span>
+      <span>{{ page.title }}</span>
+    </nav>
+    <h1>{{ page.title }}</h1>
+    <div class="rte">{{ page.content }}</div>
+  </div>
+</section>
 {% schema %}
-{"name":"Page","settings":[]}
+{
+  "name": "Page",
+  "settings": []
+}
 {% endschema %}
