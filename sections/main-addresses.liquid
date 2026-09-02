@@ -1,0 +1,52 @@
+<section class="ee-shopify-main customer">
+  <div class="container">
+    <nav class="ee-breadcrumb" aria-label="Breadcrumb">
+      <a href="{{ routes.account_url }}">Account</a>
+      <span>/</span>
+      <span>Addresses</span>
+    </nav>
+    <h1>Addresses</h1>
+    <p class="ee-lede">Saved for faster checkout and Columbus pickup notes.</p>
+
+    <div class="ee-address-grid">
+      {% paginate customer.addresses by 8 %}
+        {% for address in customer.addresses %}
+          <article class="store-card">
+            {% if address == customer.default_address %}
+              <span class="store-badge open">Default</span>
+            {% endif %}
+            {{ address | format_address }}
+            {% form 'customer_address', address %}
+              <button class="btn btn-secondary" type="submit" name="_method" value="delete">Remove</button>
+            {% endform %}
+          </article>
+        {% endfor %}
+        {{ paginate | default_pagination }}
+      {% endpaginate %}
+    </div>
+
+    {% form 'customer_address', customer.new_address %}
+      <h2>Add address</h2>
+      <div class="ee-address-form">
+        <input type="text" name="address[first_name]" placeholder="First name" autocomplete="given-name">
+        <input type="text" name="address[last_name]" placeholder="Last name" autocomplete="family-name">
+        <input type="text" name="address[company]" placeholder="Company (optional)" autocomplete="organization">
+        <input type="text" name="address[address1]" placeholder="Address" autocomplete="address-line1" required>
+        <input type="text" name="address[address2]" placeholder="Apartment, suite (optional)" autocomplete="address-line2">
+        <input type="text" name="address[city]" placeholder="City" autocomplete="address-level2" required>
+        <input type="text" name="address[province]" placeholder="State" autocomplete="address-level1">
+        <input type="text" name="address[zip]" placeholder="ZIP" autocomplete="postal-code" required>
+        <input type="text" name="address[country]" placeholder="Country" value="United States" autocomplete="country-name">
+        <input type="tel" name="address[phone]" placeholder="Phone" autocomplete="tel">
+      </div>
+      <label class="layaway-agree">
+        <input type="checkbox" name="address[default]" value="1">
+        <span>Set as default address</span>
+      </label>
+      <button class="btn btn-primary" type="submit">Save address</button>
+    {% endform %}
+  </div>
+</section>
+{% schema %}
+{ "name": "Addresses", "settings": [] }
+{% endschema %}

@@ -1,0 +1,47 @@
+<section class="ee-shopify-main customer">
+  <div class="container">
+    <nav class="ee-breadcrumb" aria-label="Breadcrumb">
+      <a href="{{ routes.root_url }}">Home</a>
+      <span>/</span>
+      <span>Account</span>
+    </nav>
+    <div class="ee-account-split">
+      <div id="login">
+        <p class="curated-kicker">The Essence Way!</p>
+        <h1>Sign in</h1>
+        <p class="ee-lede">Access orders, saved addresses and faster checkout.</p>
+        {% form 'customer_login' %}
+          {{ form.errors | default_errors }}
+          <label class="sr-only" for="CustomerEmail">Email</label>
+          <input type="email" name="customer[email]" id="CustomerEmail" placeholder="Email address" required autocomplete="email">
+          <label class="sr-only" for="CustomerPassword">Password</label>
+          <input type="password" name="customer[password]" id="CustomerPassword" placeholder="Password" required autocomplete="current-password">
+          <button class="btn btn-primary" type="submit">Sign in</button>
+          <a href="#recover">Forgot password?</a>
+        {% endform %}
+      </div>
+      <div>
+        <h2>Create account</h2>
+        <p class="ee-lede">Save your wishlist, track orders and check out faster.</p>
+        <a class="btn btn-secondary" href="{{ routes.account_register_url }}">Create an account</a>
+      </div>
+    </div>
+
+    <div id="recover" class="ee-recover">
+      <h2>Reset password</h2>
+      <p class="ee-lede">Enter your email and we’ll send a reset link.</p>
+      {% form 'recover_customer_password' %}
+        {{ form.errors | default_errors }}
+        {% if form.posted_successfully? %}
+          <p class="note">Check your inbox for a reset link.</p>
+        {% endif %}
+        <input type="email" name="email" placeholder="Email address" required autocomplete="email">
+        <button class="btn btn-secondary" type="submit">Send reset link</button>
+        <a href="#login">Back to sign in</a>
+      {% endform %}
+    </div>
+  </div>
+</section>
+{% schema %}
+{ "name": "Login", "settings": [] }
+{% endschema %}

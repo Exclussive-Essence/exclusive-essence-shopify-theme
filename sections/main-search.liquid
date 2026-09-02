@@ -1,10 +1,49 @@
-<section class="container">
-  <h1>Search</h1>
-  <form action="{{ routes.search_url }}" method="get"><input type="search" name="q" value="{{ search.terms | escape }}"><button>Search</button></form>
-  {% for result in search.results %}
-    <p><a href="{{ result.url }}">{{ result.title }}</a></p>
-  {% endfor %}
+<section class="ee-shopify-main">
+  <div class="container">
+    <nav class="ee-breadcrumb" aria-label="Breadcrumb">
+      <a href="{{ routes.root_url }}">Home</a>
+      <span>/</span>
+      <span>Search</span>
+    </nav>
+    <h1>{% if search.performed %}Results for “{{ search.terms | escape }}”{% else %}Search the catalog{% endif %}</h1>
+    <form class="search-shell" action="{{ routes.search_url }}" method="get" role="search" style="max-width:640px;margin:0 0 32px">
+      <input type="search" name="q" value="{{ search.terms | escape }}" placeholder="Search products, brands and categories..." aria-label="Search" autofocus>
+      <input type="hidden" name="type" value="product">
+      <button type="submit" aria-label="Search"><svg class="icon"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg></button>
+    </form>
+
+    {% if search.performed %}
+      <p class="ee-lede">
+        {% if search.results_count == 0 %}
+          No products match “{{ search.terms | escape }}”. Try a brand name (Outre, Adore, VO5) or a department.
+        {% else %}
+          {{ search.results_count }} result{% if search.results_count != 1 %}s{% endif %} for “{{ search.terms | escape }}”.
+        {% endif %}
+      </p>
+      {% paginate search.results by 48 %}
+        <div class="product-shelf">
+          {% for item in search.results %}
+            {% if item.object_type == 'product' %}
+              {% render 'product-card', product: item %}
+            {% endif %}
+          {% endfor %}
+        </div>
+        <nav class="pagination" aria-label="Search pages">{{ paginate | default_pagination }}</nav>
+      {% endpaginate %}
+      {% if search.results_count == 0 %}
+        <div class="catalog-tools" style="margin-top:12px">
+          {% render 'department-chips', current: 'all' %}
+        </div>
+      {% endif %}
+    {% else %}
+      <p class="ee-lede">Search the full Exclusive Essence catalog — hair, care, color, tools and more.</p>
+      {% render 'department-chips', current: 'all' %}
+    {% endif %}
+  </div>
 </section>
 {% schema %}
-{"name":"Search","settings":[]}
+{
+  "name": "Search",
+  "settings": []
+}
 {% endschema %}

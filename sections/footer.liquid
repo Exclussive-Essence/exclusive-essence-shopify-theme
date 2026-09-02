@@ -1,9 +1,70 @@
-<footer class="site-footer">
+<footer class="footer">
   <div class="container">
-    <p>{{ shop.name }} · 2100 Cleveland Ave, Columbus, OH 43211</p>
-    <p>Monday–Saturday 10 AM–10 PM · Sunday 12 PM–6 PM</p>
+    <div class="footer-grid">
+      <div>
+        <img class="footer-logo" src="{{ 'b277e37070df.png' | asset_url }}" data-asset="logo" alt="{{ shop.name | escape }}">
+        <p>Premium beauty supply store for human hair, hair care, color and professional beauty essentials.</p>
+        <p class="footer-flagship">2100 Cleveland Ave, Columbus, OH 43211<br>Mon–Sat 10 AM–10 PM · Sun 12–6 PM</p>
+      </div>
+      <div>
+        <h4>Shop</h4>
+        <a href="{{ routes.all_products_collection_url }}">New Arrivals</a>
+        <a href="{% render 'collection-url', handle: 'human-hair' %}">Human Hair</a>
+        <a href="{% render 'collection-url', handle: 'hair-care' %}">Hair Care</a>
+        <a href="{% render 'collection-url', handle: 'hair-color' %}">Hair Color</a>
+        <a href="{% render 'collection-url', handle: 'braids-wigs-crochet' %}">Braids, Wigs & Crochet</a>
+        <a href="{% render 'collection-url', handle: 'essentials' %}">Essentials</a>
+        <a href="{{ routes.all_products_collection_url }}">Full catalog</a>
+      </div>
+      <div>
+        <h4>Customer Care</h4>
+        <a href="{{ routes.root_url }}#stores">Our Stores</a>
+        <a href="{{ routes.root_url }}#visit">Local Pickup</a>
+        <a href="{{ routes.cart_url }}">Cart</a>
+        <a href="{{ routes.account_url }}">Account</a>
+        {% if shop.shipping_policy %}
+          <a href="{{ shop.shipping_policy.url }}">Shipping Policy</a>
+        {% endif %}
+        {% if shop.refund_policy %}
+          <a href="{{ shop.refund_policy.url }}">Return Policy</a>
+        {% endif %}
+        {% if shop.privacy_policy %}
+          <a href="{{ shop.privacy_policy.url }}">Privacy Policy</a>
+        {% endif %}
+        <a href="#" data-open-layaway>Layaway Agreement</a>
+        {% if pages.contact %}
+          <a href="{{ pages.contact.url }}">Contact</a>
+        {% else %}
+          <a href="{{ routes.root_url }}#visit">Contact</a>
+        {% endif %}
+      </div>
+      <div>
+        <h4>{{ section.settings.heading }}</h4>
+        <p>{{ section.settings.newsletter_text }}</p>
+        {% form 'customer', class: 'newsletter', id: 'newsletterForm' %}
+          <input type="hidden" name="contact[tags]" value="newsletter,essence-list">
+          <input type="hidden" name="contact[accepts_marketing]" value="true">
+          <input class="ee-hp" type="text" name="contact[company]" tabindex="-1" aria-hidden="true" autocomplete="off">
+          <label class="sr-only" for="NewsletterEmail">Email address</label>
+          <input id="NewsletterEmail" type="email" name="contact[email]" placeholder="Email address" required autocomplete="email">
+          <button type="submit">Join</button>
+        {% endform %}
+        <a class="footer-ig" href="https://www.instagram.com/{{ settings.instagram | default: 'shopexclusiveessence' }}" target="_blank" rel="noopener">@{{ settings.instagram | default: 'shopexclusiveessence' }}</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© {{ 'now' | date: '%Y' }} {{ shop.name }}.</span>
+      <span>Columbus flagship · Pickup & nationwide shipping</span>
+    </div>
   </div>
 </footer>
+
 {% schema %}
-{"name":"Footer","settings":[]}
+{
+  "name": "Footer",
+  "settings": [
+    {"type": "text", "id": "heading", "label": "Newsletter heading", "default": "Join the Essence List"},
+    {"type": "textarea", "id": "newsletter_text", "label": "Newsletter text", "default": "Get new-arrival alerts, restock updates and local-store offers."}
+  ]
+}
 {% endschema %}

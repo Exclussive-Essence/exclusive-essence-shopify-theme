@@ -1,0 +1,48 @@
+<section class="ee-shopify-main customer">
+  <div class="container">
+    <nav class="ee-breadcrumb" aria-label="Breadcrumb">
+      <a href="{{ routes.account_url }}">Account</a>
+      <span>/</span>
+      <span>{{ order.name }}</span>
+    </nav>
+    <h1>Order {{ order.name }}</h1>
+    <p class="ee-lede">Placed {{ order.created_at | date: '%B %d, %Y' }} · {{ order.financial_status_label }} · {{ order.fulfillment_status_label }}</p>
+    <table class="cart-table">
+      <thead><tr><th>Product</th><th>Qty</th><th>Total</th></tr></thead>
+      <tbody>
+        {% for line_item in order.line_items %}
+          <tr>
+            <td>
+              <div class="ee-cart-item">
+                {% if line_item.image %}
+                  {% render 'hi-res-image', image: line_item.image, alt: line_item.title, sizes: '84px', class: 'ee-cart-thumb' %}
+                {% endif %}
+                <div>
+                  <strong>{{ line_item.product.title | default: line_item.title }}</strong>
+                  {% unless line_item.product.has_only_default_variant %}
+                    <br><small>{{ line_item.variant.title }}</small>
+                  {% endunless %}
+                </div>
+              </div>
+            </td>
+            <td>{{ line_item.quantity }}</td>
+            <td>{{ line_item.final_line_price | money }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <div class="cart-summary">
+      <div class="total-row"><span>Subtotal</span><span>{{ order.line_items_subtotal_price | money }}</span></div>
+      {% if order.total_shipping_price > 0 %}
+        <div class="total-row"><span>Shipping</span><span>{{ order.total_shipping_price | money }}</span></div>
+      {% endif %}
+      <div class="total-row"><span>Total</span><span>{{ order.total_price | money }}</span></div>
+      {% if order.shipping_address %}
+        <p class="ee-lede">Ship to {{ order.shipping_address.name }}, {{ order.shipping_address.city }} {{ order.shipping_address.province_code }}</p>
+      {% endif %}
+    </div>
+  </div>
+</section>
+{% schema %}
+{ "name": "Order", "settings": [] }
+{% endschema %}
